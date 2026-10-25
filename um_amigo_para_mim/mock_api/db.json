@@ -1,0 +1,84 @@
+{
+  "animals": [
+    {
+      "id": "dog-01",
+      "name": "Thor",
+      "species": "dog",
+      "gender": "male",
+      "age": "2 anos",
+      "image": "https://images.unsplash.com/photo-1552053831-71594a27632d?w=900&q=80",
+      "story": "Thor foi resgatado ainda filhote e agora espera uma família para chamar de sua.",
+      "behavior": "Brincalhão, dócil e sociável. Adora correr e aprender truques novos."
+    },
+    {
+      "id": "dog-02",
+      "name": "Luna",
+      "species": "dog",
+      "gender": "female",
+      "age": "4 anos",
+      "image": "https://images.unsplash.com/photo-1558788353-f76d92427f16?w=900&q=80",
+      "story": "Luna chegou ao abrigo depois de ser encontrada sozinha, mas nunca perdeu a confiança nas pessoas.",
+      "behavior": "Carinhosa, tranquila e muito companheira para passeios."
+    },
+    {
+      "id": "dog-03",
+      "name": "Bento",
+      "species": "dog",
+      "gender": "male",
+      "age": "1 ano",
+      "image": "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e?w=900&q=80",
+      "story": "Bento é um jovem cheio de energia que foi acolhido por uma rede de protetores.",
+      "behavior": "Curioso, esperto e animado. Precisa de uma família ativa."
+    },
+    {
+      "id": "dog-04",
+      "name": "Amora",
+      "species": "dog",
+      "gender": "female",
+      "age": "6 anos",
+      "image": "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=900&q=80",
+      "story": "Amora está pronta para recomeçar e encontrou no abrigo um lugar seguro para esperar.",
+      "behavior": "Gentil, paciente e ótima com crianças."
+    },
+    {
+      "id": "cat-01",
+      "name": "Mingau",
+      "species": "cat",
+      "gender": "male",
+      "age": "3 anos",
+      "image": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=900&q=80",
+      "story": "Mingau foi encontrado em uma praça e se adaptou rapidamente à rotina do abrigo.",
+      "behavior": "Independente, carinhoso e fã de uma boa soneca ao sol."
+    },
+    {
+      "id": "cat-02",
+      "name": "Nina",
+      "species": "cat",
+      "gender": "female",
+      "age": "2 anos",
+      "image": "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=900&q=80",
+      "story": "Nina foi cuidada por uma família temporária e agora procura um lar definitivo.",
+      "behavior": "Curiosa, doce e gosta de ficar por perto enquanto você lê."
+    },
+    {
+      "id": "cat-03",
+      "name": "Pipoca",
+      "species": "cat",
+      "gender": "female",
+      "age": "5 anos",
+      "image": "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=900&q=80",
+      "story": "Pipoca chegou muito tímida, mas floresceu com o cuidado dos voluntários.",
+      "behavior": "Calma, observadora e muito afetuosa depois que ganha confiança."
+    },
+    {
+      "id": "cat-04",
+      "name": "Tico",
+      "species": "cat",
+      "gender": "male",
+      "age": "8 meses",
+      "image": "https://images.unsplash.com/photo-1513245543132-31f507417b26?w=900&q=80",
+      "story": "Tico é um filhote que foi resgatado com seus irmãos e já está pronto para uma nova aventura.",
+      "behavior": "Brincalhão, comunicativo e cheio de personalidade."
+    }
+  ]
+}

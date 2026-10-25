@@ -1,0 +1,10 @@
+{
+  "name": "um-amigo-para-mim-mock-api",
+  "private": true,
+  "scripts": {
+    "api": "json-server --watch db.json --host 0.0.0.0 --port 3000"
+  },
+  "dependencies": {
+    "json-server": "0.17.4"
+  }
+}
