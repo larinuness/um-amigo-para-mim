@@ -1,17 +1,30 @@
-# um_amigo_para_mim
+# Um Amigo Para Mim
 
-A new Flutter project.
+MVP Flutter de adoção de animais, criado para demonstrar navegação, Clean Architecture, Cubits, integração HTTP e persistência local de favoritos.
 
-## Getting Started
+## Executar
 
-This project is a starting point for a Flutter application.
+Para usar a API local, instale as dependências e inicie o JSON Server:
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+cd mock_api
+npm install
+npm run api
+```
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+Em outro terminal, execute o aplicativo apontando para a API:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+flutter run --dart-define=API_BASE_URL=http://10.0.2.2:3000
+```
+
+No desktop, use `http://localhost:3000`. Se a API estiver indisponível, o app usa automaticamente `mock_api/db.json` como fallback.
+
+## Validação
+
+```bash
+flutter analyze
+flutter test
+```
+
+Os favoritos são persistidos pela chave `favorite_animal_ids` usando `SharedPreferences`.
