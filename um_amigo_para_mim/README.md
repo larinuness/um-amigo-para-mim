@@ -18,7 +18,7 @@ Em outro terminal, execute o aplicativo apontando para a API:
 flutter run --dart-define=API_BASE_URL=http://10.0.2.2:3000
 ```
 
-No desktop, use `http://localhost:3000`. Se a API estiver indisponível, o app usa automaticamente `mock_api/db.json` como fallback.
+No desktop, use `http://localhost:3000`. Se a API estiver indisponível, o app exibe a tela de erro e oferece uma nova tentativa.
 
 ## Validação
 
@@ -28,3 +28,9 @@ flutter test
 ```
 
 Os favoritos são persistidos pela chave `favorite_animal_ids` usando `SharedPreferences`.
+
+No perfil, a aba **Em processo** mostra os animais para os quais o usuário iniciou
+um processo de adoção. O processo é iniciado na tela de detalhes, pode ser
+cancelado e usa um `profileId` anônimo persistido localmente. A Mock API mantém
+os registros em `adoptionProcesses`; se ela estiver indisponível, o aplicativo
+exibe a tela de erro e não usa dados locais como fallback.
