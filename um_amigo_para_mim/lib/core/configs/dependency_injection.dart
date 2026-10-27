@@ -3,8 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/repositories/adoption_repository_impl.dart';
 import '../../data/repositories/animal_repository_impl.dart';
-import '../../data/repositories/in_memory_adoption_repository.dart';
-import '../../data/repositories/in_memory_profile_repository.dart';
 import '../../data/repositories/profile_repository_impl.dart';
 import '../../domain/repositories/adoption_repository.dart';
 import '../../domain/repositories/animal_repository.dart';
@@ -55,28 +53,15 @@ class DependencyInjection {
   static AppDependencies createWith({
     required AnimalRepository animalRepository,
     required ProfileRepository profileRepository,
-    AdoptionRepository? adoptionRepository,
+    required AdoptionRepository adoptionRepository,
   }) {
-    final resolvedAdoptionRepository =
-        adoptionRepository ?? InMemoryAdoptionRepository();
     return AppDependencies(
-      adoptionRepository: resolvedAdoptionRepository,
+      adoptionRepository: adoptionRepository,
       animalRepository: animalRepository,
       profileRepository: profileRepository,
-      adoptionUseCase: AdoptionUseCase(resolvedAdoptionRepository),
+      adoptionUseCase: AdoptionUseCase(adoptionRepository),
       animalUseCase: AnimalUseCase(animalRepository),
       profileUseCase: ProfileUseCase(profileRepository),
-    );
-  }
-
-  static AppDependencies inMemory() {
-    return createWith(
-      animalRepository: AnimalRepositoryImpl(
-        client: http.Client(),
-        baseUrl: AppConfig.apiBaseUrl,
-      ),
-      profileRepository: InMemoryProfileRepository(),
-      adoptionRepository: InMemoryAdoptionRepository(),
     );
   }
 }

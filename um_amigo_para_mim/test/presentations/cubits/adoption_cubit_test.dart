@@ -1,8 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:um_amigo_para_mim/data/repositories/in_memory_adoption_repository.dart';
 import 'package:um_amigo_para_mim/domain/usecases/adoption_use_case.dart';
 import 'package:um_amigo_para_mim/presentations/cubits/adoption_cubit.dart';
+
+import '../../support/repositories/in_memory_adoption_repository.dart';
 
 void main() {
   blocTest<AdoptionCubit, AdoptionState>(

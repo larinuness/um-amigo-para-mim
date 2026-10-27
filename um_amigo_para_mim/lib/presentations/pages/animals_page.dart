@@ -47,7 +47,10 @@ class _AnimalsPageState extends State<AnimalsPage> {
         leading: BackButton(onPressed: () => context.pop()),
         actions: [
           IconButton(
-            onPressed: () => context.push('/profile'),
+            onPressed: () async {
+              await context.push('/profile');
+              _load();
+            },
             icon: const Icon(Icons.favorite_border),
             tooltip: 'Meus favoritos',
           ),

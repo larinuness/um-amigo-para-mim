@@ -1,11 +1,13 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 
-import 'package:um_amigo_para_mim/data/repositories/in_memory_profile_repository.dart';
 import 'package:um_amigo_para_mim/domain/entities/animal.dart';
 import 'package:um_amigo_para_mim/domain/repositories/animal_repository.dart';
 import 'package:um_amigo_para_mim/main.dart';
 import 'package:um_amigo_para_mim/core/configs/dependency_injection.dart';
+
+import '../../support/repositories/in_memory_adoption_repository.dart';
+import '../../support/repositories/in_memory_profile_repository.dart';
 
 class _FakeAnimalRepository implements AnimalRepository {
   final animals = const [
@@ -47,6 +49,7 @@ void main() {
   AppDependencies dependencies() => DependencyInjection.createWith(
     animalRepository: _FakeAnimalRepository(),
     profileRepository: InMemoryProfileRepository(),
+    adoptionRepository: InMemoryAdoptionRepository(),
   );
 
   testWidgets('navega da seleção para a lista e para os detalhes', (
@@ -78,6 +81,22 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Thor'), findsOneWidget);
+  });
+
+  testWidgets('preserva o filtro de espécie ao voltar dos favoritos', (
+    tester,
+  ) async {
+    await tester.pumpWidget(MyApp(dependencies: dependencies()));
+    await tester.tap(find.text('Cachorros'));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byTooltip('Meus favoritos'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Thor'), findsOneWidget);
+    expect(find.text('Nina'), findsNothing);
   });
 
   testWidgets('inicia um processo e exibe o animal na aba de processos', (

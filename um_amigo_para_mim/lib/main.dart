@@ -21,47 +21,43 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, this.dependencies});
+  const MyApp({super.key, required this.dependencies});
 
-  final AppDependencies? dependencies;
+  final AppDependencies dependencies;
 
   @override
   Widget build(BuildContext context) {
-    final appDependencies = dependencies ?? DependencyInjection.inMemory();
-
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<AdoptionRepository>.value(
-          value: appDependencies.adoptionRepository,
+          value: dependencies.adoptionRepository,
         ),
         RepositoryProvider<AnimalRepository>.value(
-          value: appDependencies.animalRepository,
+          value: dependencies.animalRepository,
         ),
         RepositoryProvider<ProfileRepository>.value(
-          value: appDependencies.profileRepository,
+          value: dependencies.profileRepository,
         ),
         RepositoryProvider<AdoptionUseCase>.value(
-          value: appDependencies.adoptionUseCase,
+          value: dependencies.adoptionUseCase,
         ),
         RepositoryProvider<AnimalUseCase>.value(
-          value: appDependencies.animalUseCase,
+          value: dependencies.animalUseCase,
         ),
         RepositoryProvider<ProfileUseCase>.value(
-          value: appDependencies.profileUseCase,
+          value: dependencies.profileUseCase,
         ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AdoptionCubit>(
-            create: (_) =>
-                AdoptionCubit(appDependencies.adoptionUseCase)..load(),
+            create: (_) => AdoptionCubit(dependencies.adoptionUseCase)..load(),
           ),
           BlocProvider<AnimalCubit>(
-            create: (_) => AnimalCubit(appDependencies.animalUseCase),
+            create: (_) => AnimalCubit(dependencies.animalUseCase),
           ),
           BlocProvider<FavoritesCubit>(
-            create: (_) =>
-                FavoritesCubit(appDependencies.profileUseCase)..load(),
+            create: (_) => FavoritesCubit(dependencies.profileUseCase)..load(),
           ),
         ],
         child: MaterialApp.router(

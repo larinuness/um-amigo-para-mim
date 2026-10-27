@@ -82,6 +82,13 @@
     }
   ],
   "adoptionProcesses": [
- 
+    {
+      "id": "profile-1793062184965073__cat-01",
+      "animalId": "cat-01",
+      "profileId": "profile-1793062184965073",
+      "status": "cancelled",
+      "startedAt": "2026-10-27T01:52:02.182018Z",
+      "updatedAt": "2026-10-27T01:52:19.114935Z"
+    }
   ]
 }

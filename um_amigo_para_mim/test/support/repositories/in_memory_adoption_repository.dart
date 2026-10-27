@@ -1,5 +1,5 @@
-import '../../domain/entities/adoption_process.dart';
-import '../../domain/repositories/adoption_repository.dart';
+import 'package:um_amigo_para_mim/domain/entities/adoption_process.dart';
+import 'package:um_amigo_para_mim/domain/repositories/adoption_repository.dart';
 
 class InMemoryAdoptionRepository implements AdoptionRepository {
   InMemoryAdoptionRepository({this.profileId = 'test-profile'})

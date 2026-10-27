@@ -1,8 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:um_amigo_para_mim/data/repositories/in_memory_profile_repository.dart';
 import 'package:um_amigo_para_mim/domain/usecases/profile_use_case.dart';
 import 'package:um_amigo_para_mim/presentations/cubits/favorites_cubit.dart';
+
+import '../../support/repositories/in_memory_profile_repository.dart';
 
 void main() {
   blocTest<FavoritesCubit, FavoritesState>(

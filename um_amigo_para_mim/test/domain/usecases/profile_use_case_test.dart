@@ -1,7 +1,8 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:um_amigo_para_mim/data/repositories/in_memory_profile_repository.dart';
 import 'package:um_amigo_para_mim/domain/entities/animal.dart';
 import 'package:um_amigo_para_mim/domain/usecases/profile_use_case.dart';
+
+import '../../support/repositories/in_memory_profile_repository.dart';
 
 void main() {
   test('ProfileUseCase seleciona apenas os animais favoritos', () {

@@ -1,6 +1,5 @@
-import '../../domain/repositories/profile_repository.dart';
+import 'package:um_amigo_para_mim/domain/repositories/profile_repository.dart';
 
-/// Small synchronous-in-memory implementation used by widget previews/tests.
 class InMemoryProfileRepository implements ProfileRepository {
   InMemoryProfileRepository([Set<String>? initialFavorites])
     : _favoriteIds = {...?initialFavorites};
