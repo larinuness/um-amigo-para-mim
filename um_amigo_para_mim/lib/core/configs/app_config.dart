@@ -6,7 +6,6 @@ class AppConfig {
     defaultValue: 'http://localhost:3000',
   );
 
-  static const fallbackAssetPath = 'mock_api/db.json';
   static const favoriteAnimalIdsKey = 'favorite_animal_ids';
   static const anonymousProfileIdKey = 'anonymous_profile_id';
 }

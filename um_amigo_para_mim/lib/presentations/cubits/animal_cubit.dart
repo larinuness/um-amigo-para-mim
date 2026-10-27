@@ -14,6 +14,7 @@ class AnimalCubit extends Cubit<AnimalState> {
     emit(
       state.copyWith(
         status: AnimalStatus.loading,
+        animals: const [],
         species: species,
         clearError: true,
       ),
@@ -61,7 +62,13 @@ class AnimalCubit extends Cubit<AnimalState> {
   }
 
   Future<void> loadAll() async {
-    emit(state.copyWith(status: AnimalStatus.loading, clearError: true));
+    emit(
+      state.copyWith(
+        status: AnimalStatus.loading,
+        animals: const [],
+        clearError: true,
+      ),
+    );
     try {
       final animals = await useCase.getAllAnimals();
       emit(

@@ -7,10 +7,6 @@ import 'package:um_amigo_para_mim/data/repositories/animal_repository_impl.dart'
 
 class _MockHttpClient extends Mock implements http.Client {}
 
-const fallback = '''
-{"animals":[{"id":"cat-01","name":"Nina","species":"cat","gender":"female","age":"2 anos","image":"","story":"Resgatada.","behavior":"Doce."}]}
-''';
-
 void main() {
   late _MockHttpClient client;
   late AnimalRepositoryImpl repository;
@@ -24,7 +20,6 @@ void main() {
     repository = AnimalRepositoryImpl(
       client: client,
       baseUrl: 'http://localhost:3000',
-      fallbackLoader: () async => fallback,
     );
   });
 
@@ -51,11 +46,9 @@ void main() {
     expect(animals.single.name, 'Thor');
   });
 
-  test('uses the local JSON when the API fails', () async {
+  test('propagates the API error when it fails', () async {
     when(() => client.get(any())).thenThrow(Exception('API indisponivel'));
 
-    final animals = await repository.getAnimalsBySpecies('cat');
-
-    expect(animals.single.id, 'cat-01');
+    expect(repository.getAnimalsBySpecies('cat'), throwsA(isA<Exception>()));
   });
 }
