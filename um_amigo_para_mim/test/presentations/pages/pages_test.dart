@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:flutter/material.dart';
 
 import 'package:um_amigo_para_mim/data/repositories/in_memory_profile_repository.dart';
 import 'package:um_amigo_para_mim/domain/entities/animal.dart';
@@ -77,5 +78,51 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.text('Thor'), findsOneWidget);
+  });
+
+  testWidgets('inicia um processo e exibe o animal na aba de processos', (
+    tester,
+  ) async {
+    await tester.pumpWidget(MyApp(dependencies: dependencies()));
+    await tester.tap(find.text('Cachorros'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Thor'));
+    await tester.pumpAndSettle();
+
+    final startButton = find.text('Iniciar processo de adoção');
+    await tester.ensureVisible(startButton);
+    await tester.tap(startButton);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Processo de adoção iniciado'), findsOneWidget);
+    await tester.tap(find.byType(BackButton));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Meus favoritos'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Em processo'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Thor'), findsOneWidget);
+  });
+
+  testWidgets('cancela um processo de adoção nos detalhes', (tester) async {
+    await tester.pumpWidget(MyApp(dependencies: dependencies()));
+    await tester.tap(find.text('Cachorros'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Thor'));
+    await tester.pumpAndSettle();
+    final startButton = find.text('Iniciar processo de adoção');
+    await tester.ensureVisible(startButton);
+    await tester.tap(startButton);
+    await tester.pumpAndSettle();
+
+    final cancelButton = find.text('Cancelar processo');
+    await tester.ensureVisible(cancelButton);
+    await tester.tap(cancelButton);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Cancelar processo').last);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Iniciar processo de adoção'), findsOneWidget);
   });
 }

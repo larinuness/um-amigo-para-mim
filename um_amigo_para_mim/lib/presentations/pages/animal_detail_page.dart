@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../domain/entities/animal.dart';
+import '../cubits/adoption_cubit.dart';
 import '../cubits/animal_cubit.dart';
 import '../cubits/favorites_cubit.dart';
 import '../widgets/error_state_widget.dart';
@@ -57,8 +58,9 @@ class _AnimalDetailPageState extends State<AnimalDetailPage> {
       ),
       body: BlocBuilder<AnimalCubit, AnimalState>(
         builder: (context, state) {
-          if (state.status == AnimalStatus.loading ||
-              state.selectedAnimal == null) {
+          if (state.status != AnimalStatus.failure &&
+              (state.status == AnimalStatus.loading ||
+                  state.selectedAnimal == null)) {
             return const LoadingStateWidget();
           }
           if (state.status == AnimalStatus.failure) {
@@ -123,8 +125,123 @@ class _AnimalDetailPageState extends State<AnimalDetailPage> {
             icon: Icons.mood_outlined,
             text: animal.behavior,
           ),
+          const SizedBox(height: 28),
+          _buildAdoptionAction(context, animal),
         ],
       ),
+    );
+  }
+
+  Widget _buildAdoptionAction(BuildContext context, Animal animal) {
+    return BlocBuilder<AdoptionCubit, AdoptionState>(
+      builder: (context, adoptionState) {
+        final isInProcess = adoptionState.contains(animal.id);
+        final errorMessage = adoptionState.status == AdoptionStatus.failure
+            ? adoptionState.errorMessage
+            : null;
+
+        if (isInProcess) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.secondaryContainer,
+                  borderRadius: BorderRadius.circular(18),
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Icons.check_circle_outline,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                    const SizedBox(width: 12),
+                    const Expanded(
+                      child: Text(
+                        'Processo de adoção iniciado',
+                        style: TextStyle(fontWeight: FontWeight.w700),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 12),
+              OutlinedButton.icon(
+                onPressed: () => _confirmCancellation(context, animal),
+                icon: const Icon(Icons.close),
+                label: const Text('Cancelar processo'),
+              ),
+              if (errorMessage != null) ...[
+                const SizedBox(height: 8),
+                Text(
+                  errorMessage,
+                  style: TextStyle(color: Theme.of(context).colorScheme.error),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ],
+          );
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            FilledButton.icon(
+              onPressed: () async {
+                final adoptionCubit = context.read<AdoptionCubit>();
+                await adoptionCubit.startProcess(animal.id);
+                if (!context.mounted) return;
+                if (!adoptionCubit.isInProcess(animal.id)) return;
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Processo de adoção iniciado.')),
+                );
+              },
+              icon: const Icon(Icons.volunteer_activism_outlined),
+              label: const Text('Iniciar processo de adoção'),
+            ),
+            if (errorMessage != null) ...[
+              const SizedBox(height: 8),
+              Text(
+                errorMessage,
+                style: TextStyle(color: Theme.of(context).colorScheme.error),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _confirmCancellation(BuildContext context, Animal animal) async {
+    final shouldCancel = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: const Text('Cancelar processo?'),
+        content: Text(
+          'O processo de adoção de ${animal.name} será removido do seu perfil.',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(false),
+            child: const Text('Continuar processo'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.of(dialogContext).pop(true),
+            child: const Text('Cancelar processo'),
+          ),
+        ],
+      ),
+    );
+
+    if (shouldCancel != true || !context.mounted) return;
+    final adoptionCubit = context.read<AdoptionCubit>();
+    await adoptionCubit.cancelProcess(animal.id);
+    if (!context.mounted) return;
+    if (adoptionCubit.isInProcess(animal.id)) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Processo de adoção cancelado.')),
     );
   }
 

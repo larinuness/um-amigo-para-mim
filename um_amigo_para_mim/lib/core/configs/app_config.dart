@@ -8,4 +8,5 @@ class AppConfig {
 
   static const fallbackAssetPath = 'mock_api/db.json';
   static const favoriteAnimalIdsKey = 'favorite_animal_ids';
+  static const anonymousProfileIdKey = 'anonymous_profile_id';
 }

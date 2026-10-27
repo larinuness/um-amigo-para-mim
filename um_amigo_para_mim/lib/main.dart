@@ -4,10 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/configs/dependency_injection.dart';
 import 'core/routes/app_router.dart';
 import 'core/themes/app_theme.dart';
+import 'domain/repositories/adoption_repository.dart';
 import 'domain/repositories/animal_repository.dart';
 import 'domain/repositories/profile_repository.dart';
+import 'domain/usecases/adoption_use_case.dart';
 import 'domain/usecases/animal_use_case.dart';
 import 'domain/usecases/profile_use_case.dart';
+import 'presentations/cubits/adoption_cubit.dart';
 import 'presentations/cubits/animal_cubit.dart';
 import 'presentations/cubits/favorites_cubit.dart';
 
@@ -28,11 +31,17 @@ class MyApp extends StatelessWidget {
 
     return MultiRepositoryProvider(
       providers: [
+        RepositoryProvider<AdoptionRepository>.value(
+          value: appDependencies.adoptionRepository,
+        ),
         RepositoryProvider<AnimalRepository>.value(
           value: appDependencies.animalRepository,
         ),
         RepositoryProvider<ProfileRepository>.value(
           value: appDependencies.profileRepository,
+        ),
+        RepositoryProvider<AdoptionUseCase>.value(
+          value: appDependencies.adoptionUseCase,
         ),
         RepositoryProvider<AnimalUseCase>.value(
           value: appDependencies.animalUseCase,
@@ -43,6 +52,10 @@ class MyApp extends StatelessWidget {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider<AdoptionCubit>(
+            create: (_) =>
+                AdoptionCubit(appDependencies.adoptionUseCase)..load(),
+          ),
           BlocProvider<AnimalCubit>(
             create: (_) => AnimalCubit(appDependencies.animalUseCase),
           ),
